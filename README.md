@@ -5,7 +5,7 @@ The parallelisation strategy applies the map-reduce pattern to the processing of
 
 In the programming model, based on the Python language, the user creates a `DistTree` object from a list of files containing a TTree and the TTree name. Moreover, the number of partitions (sub-ranges) of the TTree can also be specified. In order to start the parallel processing, the user invokes the `ProcessAndMerge` function on the `DistTree`. The parameters of this function are the mapper and reducer functions. The mapper receives a [TTreeReader](https://root.cern.ch/doc/v608/classTTreeReader.html), a ROOT object that represents a sub-range of entries and that can be iterated on.
 
-These code snippet gives an example of how the `DistTree` class can be used:
+This code snippet gives an example of how the `DistTree` class can be used:
 ```python
 # ROOT imports
 import ROOT
