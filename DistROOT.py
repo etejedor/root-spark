@@ -14,9 +14,9 @@ def InitSpark():
 
   conf = SparkConf()
   conf.setAppName("ROOT")
-  conf.set('spark.executor.extraLibraryPath', os.environ['LD_LIBRARY_PATH'])
-  conf.set('spark.executorEnv.KRB5CCNAME', os.environ['KRB5CCNAME'])
-  conf.set('spark.yarn.dist.files', os.environ['KRB5CCNAME'] + '#krbcache')
+  #conf.set('spark.executor.extraLibraryPath', os.environ['LD_LIBRARY_PATH'])
+  #conf.set('spark.executorEnv.KRB5CCNAME', os.environ['KRB5CCNAME'])
+  #conf.set('spark.yarn.dist.files', os.environ['KRB5CCNAME'] + '#krbcache')
   #conf.set('spark.executor.memory', '1g')
   #conf.set('spark.driver.memory', '2g')
   #conf.set('spark.driver.maxResultSize', '1g')
@@ -27,22 +27,6 @@ def InitSpark():
 
   sc = SparkContext(conf = conf)
   return sc
-
-
-######################################################################
-# Function to initialize user credentials on the Spark executors.    #
-######################################################################
-
-def InitUserCredentials(sc):
-  def configMap(_):
-    import os
-    return os.system("ln -sf " + SparkFiles.get('krbcache') + " " + os.environ["KRB5CCNAME"].split(":")[1])
-
-  results = sc.parallelize(range(sc.defaultParallelism)).map(configMap).collect()
-  for r in results:
-    if r != 0:
-      print "Error initializing user credentials on Spark cluster"
-      exit(1)
 
 
 ######################################################################
@@ -128,8 +112,8 @@ class DistTree(object):
 """.format(reduceHash = GetFunctionHash(GetFunctionCode(reducerName))))
 
     def mapWrapper(rg):
-      import os
-      os.system("ln -sf " + SparkFiles.get('krbcache') + " " + os.environ["KRB5CCNAME"].split(":")[1])
+      #import os
+      #os.system("ln -sf " + SparkFiles.get('krbcache') + " " + os.environ["KRB5CCNAME"].split(":")[1])
 
       import ROOT
       ROOT.TH1.AddDirectory(False)
