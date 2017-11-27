@@ -1,5 +1,5 @@
-# ROOT Parallelization with Spark
-Project that explores the [Spark](http://spark.apache.org/) parallelization of [ROOT](https://root.cern/) analysis.
+# PyROOT Parallelization with Spark
+Project that explores the [Spark](http://spark.apache.org/) parallelization of [ROOT](https://root.cern/) analysis, in particular using the ROOT Python interface (PyROOT).
 
 The parallelisation strategy applies the map-reduce pattern to the processing of a ROOT [TTree](https://root.cern.ch/doc/v608/classTTree.html). In the map phase, each mapper reads and processes a sub-range of TTree entries and produces a partial result, while the reduce phase combines all the partial outputs into a final result (i.e. a set of filled histograms).
 
