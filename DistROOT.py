@@ -20,7 +20,8 @@ def InitSpark():
 def InitUserCredentials(sc):
   def configMap(_):
     import os
-    return os.system("ln -sf " + SparkFiles.get('krbcache') + " " + os.environ["KRB5CCNAME"])
+    os.environ["KRB5CCNAME"] = os.environ["PWD"] + "/krbcache"
+    return 0
 
   results = sc.parallelize(range(sc.defaultParallelism)).map(configMap).collect()
   for r in results:
@@ -83,7 +84,7 @@ class DistTree(object):
     sc = InitSpark()
   
     # Initialize user credentials for EOS access
-    InitUserCredentials(sc)
+    #InitUserCredentials(sc)
  
     # Parallelize the ranges with Spark
     self.ranges = sc.parallelize(ranges, npartitions)
