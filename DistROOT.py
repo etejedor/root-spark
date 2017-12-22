@@ -14,23 +14,6 @@ def InitSpark():
 
 
 ######################################################################
-# Function to initialize user credentials on the Spark executors.    #
-######################################################################
-
-def InitUserCredentials(sc):
-  def configMap(_):
-    import os
-    os.environ["KRB5CCNAME"] = os.environ["PWD"] + "/krbcache"
-    return 0
-
-  results = sc.parallelize(range(sc.defaultParallelism)).map(configMap).collect()
-  for r in results:
-    if r != 0:
-      print "Error initializing user credentials on Spark cluster"
-      exit(1)
-
-
-######################################################################
 # Utilities to obtain the code of a function given its name          #
 ######################################################################
 
@@ -83,9 +66,6 @@ class DistTree(object):
     # Initialize Spark context
     sc = InitSpark()
   
-    # Initialize user credentials for EOS access
-    #InitUserCredentials(sc)
- 
     # Parallelize the ranges with Spark
     self.ranges = sc.parallelize(ranges, npartitions)
 
